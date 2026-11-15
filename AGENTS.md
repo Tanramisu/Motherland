@@ -8,13 +8,14 @@
 
 ## 顺序
 
-1. 判目标仓库属于哪种原型、要建哪些目录：`docs/archetypes.md`。
-2. 判每篇东西属于哪种类型：`docs/doc-types.md` 的十种。
-3. 逐句判该留该改：`docs/what-good-means.md`。
-4. 落笔：`docs/writing.md`。
-5. 处理旧内容：`docs/lifecycle.md`。
+1. 判目标仓库属于哪种原型、要建哪些目录：[`docs/archetypes.md`](docs/archetypes.md)。
+2. 定目录结构：[`docs/structure.md`](docs/structure.md)。
+3. 判每篇东西属于哪种类型：[`docs/doc-types.md`](docs/doc-types.md) 的十种。
+4. 逐句判该留该改：[`docs/what-good-means.md`](docs/what-good-means.md)。
+5. 落笔：[`docs/writing.md`](docs/writing.md)。
+6. 处理旧内容：[`docs/lifecycle.md`](docs/lifecycle.md)。
 
-顺序与 [`README.md`](README.md) 的「从头建一个仓库的文档」一致。判据只在 README 和 `docs/what-good-means.md` 各写一次，这里不重复。
+判据全文只在 [`docs/what-good-means.md`](docs/what-good-means.md)，这里不重复。
 
 ## 硬规则
 
@@ -22,16 +23,6 @@
 - 直接改 `main`，不开分支。
 - 加文件前先确认现有文件装不下。
 
-## 改完检查
+## 改与删
 
-1. 链接能打开：改过路径或文件名，就在 GitHub 上点几个，别只看编辑器。
-2. 命令能跑：规范里出现的命令，实际执行一次。
-3. 删掉的东西里没有只此一份的事实。
-
-## 删文档
-
-删之前确认两件事：有没有只此一份的事实，有没有活跃文档链到它。真有人引用，改那条引用。
-
-不留备份、不留墓碑、不写废弃说明，git 历史就是备份。
-
-删除范围是本仓库的文档。别的仓库和已归档的仓库归它们的 owner。
+改完检查三样，见 [`docs/what-good-means.md`](docs/what-good-means.md#改完检查三样)；删文档之前检查两件事，见 [`docs/lifecycle.md`](docs/lifecycle.md#删之前检查两件事)。

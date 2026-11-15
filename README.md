@@ -28,24 +28,24 @@ This section records judgment formed from running several repositories this way;
 
 ## The seven main criteria
 
-1. **Write only what code and commit history cannot reconstruct.** Why something was designed this way, what was rejected, which operations fail silently, the real constraints of the field. Code structure is not written: reading code is faster, and code changes do not update docs. Literals that code can falsify — ports, defaults, version numbers, path lists — become a one-hop pointer to the source of truth, unless this page is their owner: a reference document owns its fields' defaults, and a snapshot like `status.md` owns the state at its moment; that is their job, not duplication. When a value in a document is stale while the code is right, an agent copies the stale one, confidently (pre-registered experiment, [surface-bench](https://github.com/Connorrmcd6/surface-bench/blob/main/PAPER.md)).
-2. **One fact, one home.** The same sentence in two places means one of them is wrong, and you don't know which.
-3. **Don't mix types.** A blueprint speaks of the future, a current-state document of the present, a decision of the past, a record only appends. Mixed on one page, you get sentences like "it does not own X, does not carry Y, is not a second Z" — no information at all.
-4. **Say what it is first.** A definition must be precise enough for a reader to judge whether a new example counts. Negation appears only to block a real misunderstanding.
-5. **Outdated: edit it. Superseded: delete it.** No "deprecated", no "used to be X, now Y". Deleted is deleted; git history is the backup. The one exception is deleting a page with an external URL, which leaves one hop behind — reasons and method in [`docs/lifecycle.md`](docs/lifecycle.md).
-6. **Completeness is checked against a list.** The list comes from the code, the running system, and the paths readers actually walk — not from the existing documents. Mark each item covered, half-covered, or missing; add what's missing, fix what doesn't match.
-7. **The reader can get there.** Filenames and titles are the main index: remembering one word must be enough to grep it and tell from the title which document it is. At most two guessy classification decisions along any path, each layer more specific than the one above. A complete list is not a sound structure — an index proves documents exist; names prove readers can find them.
+- **Write only what code and commit history cannot reconstruct** — why something was designed this way, what was rejected, which operations fail silently, the real constraints of the field; literals that code can falsify (ports, defaults, version numbers, path lists) become a one-hop pointer to the source of truth, unless this page is their owner, because a stale value in a document gets copied by an agent, confidently (pre-registered experiment, [surface-bench](https://github.com/Connorrmcd6/surface-bench/blob/main/PAPER.md)). The test is the deletion test in [`docs/what-good-means.md`](docs/what-good-means.md).
+- **One fact, one home.** Full text: [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条), system-level criterion 4.
+- **Don't mix types.** Full text: [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条), system-level criterion 3.
+- **Say what it is first.** Full text: [`docs/what-good-means.md`](docs/what-good-means.md#否定不能当定义).
+- **Outdated: edit it. Superseded: delete it.** Full text: [`docs/lifecycle.md`](docs/lifecycle.md#三条规则).
+- **Completeness is checked against a list.** Full text: [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条), system-level criterion 8.
+- **The reader can get there.** Full text: [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条), system-level criteria 1 and 9.
 
 The full criteria and the list of bad smells are in [`docs/what-good-means.md`](docs/what-good-means.md).
 
 ## Building a repository's documentation from scratch
 
 1. Pick the archetype: one of the eight in [`docs/archetypes.md`](docs/archetypes.md); it decides which directories the repository needs.
-2. Build the skeleton: the default in [`docs/structure.md`](docs/structure.md), minus the sections you don't need.
-3. Write the entrance: the root `README.md` links once to `docs/README.md`; `docs/README.md` has an orientation layer and sections, each section with one hub, giving paths rather than a full inventory.
-4. Type every document: one of the ten in [`docs/doc-types.md`](docs/doc-types.md); each document does one thing.
+2. Build the skeleton: the default in [`docs/structure.md`](docs/structure.md), minus the sections you don't need. Write the entrance with it: the root `README.md` links once to `docs/README.md`; `docs/README.md` has an orientation layer and sections, each section with one hub, giving paths rather than a full inventory.
+3. Type every document: one of the ten in [`docs/doc-types.md`](docs/doc-types.md); each document does one thing.
+4. Judge every sentence against [`docs/what-good-means.md`](docs/what-good-means.md): what would the reader lose if this sentence were deleted. Then reconcile — list what should exist per criterion 8 of [`docs/what-good-means.md`](docs/what-good-means.md), mark each item covered, half-covered, or missing, and check per criterion 9 for pages with zero inbound links.
 5. Write: [`docs/writing.md`](docs/writing.md). If the system isn't built yet, write the blueprint first, using the four-part addition method in [`docs/blueprint.md`](docs/blueprint.md).
-6. Reconcile: list what should exist per criterion 8 of [`docs/what-good-means.md`](docs/what-good-means.md), mark each item covered, half-covered, or missing, then check per criterion 9 for pages with zero inbound links. Run the mechanical checks first: `python scripts/check-doc-links.py` scans each repository's root entrance files and `docs/` against the local checkouts listed in `REPOS.md`, and reports relative links that point nowhere and link targets written as local absolute paths like `D:/...` — the latter open fine on the author's machine and are guaranteed dead after a clone.
+6. Deal with old documents per [`docs/lifecycle.md`](docs/lifecycle.md): edit what's outdated, delete what's superseded. Run the mechanical checks first: `python scripts/check-doc-links.py` scans each repository's root entrance files and `docs/` against the local checkouts listed in `REPOS.md`, and reports relative links that point nowhere and link targets written as local absolute paths like `D:/...` — the latter open fine on the author's machine and are guaranteed dead after a clone. The script checks the registered repositories' local checkouts; this repository is not in the registry, so its own links fall outside the script's range.
 
 ## Templates
 

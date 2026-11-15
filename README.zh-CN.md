@@ -28,24 +28,24 @@
 
 ## 七条主判据
 
-1. **只写代码和提交历史重建不出来的东西。** 为什么这样设计、否决了什么、哪些操作会静默出错、行业里的真实约束。代码结构不写：读代码更快，而且代码改了文档不会跟着改。会被代码证伪的字面量——端口、默认值、版本号、路径清单——换成指向真源的一跳，除非这一页就是它的 owner：参考文档拥有字段的默认值，`status.md` 这类快照拥有当时的状态，那是它们的职责，不是重复。文档里的值过期而代码里是对的时，agent 会抄走过期那个并且很自信（预注册实验，[surface-bench](https://github.com/Connorrmcd6/surface-bench/blob/main/PAPER.md)）。
-2. **一个事实只有一个家。** 同一句话出现在两处，必有一处是错的，而且你不知道是哪一处。
-3. **类型不混。** 蓝图说未来，当前实现说现在，决策说过去，记录只追加。混在一页，就会写出「它不拥有 X、不承担 Y、不是第二个 Z」这种没有信息量的句子。
-4. **先说它是什么。** 定义要精确到读者能拿它判断一个新例子算不算。否定只在挡住一个真实误会时出现。
-5. **过时的直接改，被取代的直接删。** 不写「已废弃」「以前是 X，现在是 Y」。删掉就是删掉，git 历史就是备份。唯一例外是有对外 URL 页面的删除，要留一跳，理由和做法见 [`docs/lifecycle.md`](docs/lifecycle.md)。
-6. **齐不齐，拿清单对账。** 清单来自代码、运行态和读者要走的路，不来自现有文档。逐项标已覆盖、半覆盖、缺失；缺的补，写了但对不上的改。
-7. **读者能到。** 文件名和标题是主索引：只记得一个词，就得 grep 得到、标题能分出是哪一份。一条路径上最多两次需要猜的分类判断，每一层比上一层更具体。清单齐全不等于结构合理——索引证明文档存在，名字证明读者找得到。
+- **只写代码和提交历史重建不出来的东西**——为什么这样设计、否决了什么、哪些操作会静默出错、行业里的真实约束；会被代码证伪的字面量（端口、默认值、版本号、路径清单）换成指向真源的一跳，除非这一页就是它的 owner，因为文档里的值过期时，agent 会抄走过期那个并且很自信（预注册实验，[surface-bench](https://github.com/Connorrmcd6/surface-bench/blob/main/PAPER.md)）。判法是 [`docs/what-good-means.md`](docs/what-good-means.md) 开头的删句测试。
+- **一个事实只有一个家。** 全文见 [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条) 系统级第 4 条。
+- **类型不混。** 全文见 [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条) 系统级第 3 条。
+- **先说它是什么。** 全文见 [`docs/what-good-means.md`](docs/what-good-means.md#否定不能当定义)。
+- **过时的直接改，被取代的直接删。** 全文见 [`docs/lifecycle.md`](docs/lifecycle.md#三条规则)。
+- **齐不齐，拿清单对账。** 全文见 [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条) 系统级第 8 条。
+- **读者能到。** 全文见 [`docs/what-good-means.md`](docs/what-good-means.md#系统级九条) 系统级第 1、9 条。
 
 完整判据与坏味道清单在 [`docs/what-good-means.md`](docs/what-good-means.md)。
 
 ## 从头建一个仓库的文档
 
 1. 判定原型：[`docs/archetypes.md`](docs/archetypes.md) 的八种，决定这个仓库要建哪些目录。
-2. 建骨架：[`docs/structure.md`](docs/structure.md) 的默认骨架，删掉用不上的板块。
-3. 写入口：根 `README.md` 一条链接指向 `docs/README.md`；`docs/README.md` 分定向层与板块，每个板块一个 hub，给路径不给全量清单。
-4. 逐篇定类型：[`docs/doc-types.md`](docs/doc-types.md) 的十种，每篇只做一件事。
+2. 建骨架：[`docs/structure.md`](docs/structure.md) 的默认骨架，删掉用不上的板块。入口随骨架一起写：根 `README.md` 一条链接指向 `docs/README.md`；`docs/README.md` 分定向层与板块，每个板块一个 hub，给路径不给全量清单。
+3. 逐篇定类型：[`docs/doc-types.md`](docs/doc-types.md) 的十种，每篇只做一件事。
+4. 逐句判：按 [`docs/what-good-means.md`](docs/what-good-means.md) 的删句测试逐句过——删掉这句，读者会失去什么。再对账：按第 8 条列应有清单，逐项标已覆盖、半覆盖、缺失，按第 9 条查有没有零入链的页。
 5. 落笔：[`docs/writing.md`](docs/writing.md)。系统还没建成时先写蓝图，按 [`docs/blueprint.md`](docs/blueprint.md) 的四段加法写。
-6. 对账：按 [`docs/what-good-means.md`](docs/what-good-means.md) 第 8 条列应有清单，逐项标已覆盖、半覆盖、缺失，再按第 9 条查有没有零入链的页。机械能查的先跑一遍：`python scripts/check-doc-links.py` 按 `REPOS.md` 的本地 checkout 扫各仓根入口文件与 `docs/`，报出指向空处的相对链接，以及写成 `D:/...` 本机绝对路径的链接目标——后者在本机打得开，克隆之后必然落空。
+6. 处理旧文档：按 [`docs/lifecycle.md`](docs/lifecycle.md)，过时的改，被取代的删。机械能查的先跑一遍：`python scripts/check-doc-links.py` 按 `REPOS.md` 的本地 checkout 扫各仓根入口文件与 `docs/`，报出指向空处的相对链接，以及写成 `D:/...` 本机绝对路径的链接目标——后者在本机打得开，克隆之后必然落空。这个脚本查的是登记表里各仓的本地 checkout，本仓不在登记表内，自己的链接不在它的检查范围内。
 
 ## 模板
 
